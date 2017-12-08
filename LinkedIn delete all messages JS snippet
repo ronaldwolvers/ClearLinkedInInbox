@@ -1,0 +1,21 @@
+
+
+//
+
+//Old.
+$(".msg-conversation-card__delete").each(function(){$(this).click();$("button.confirm-delete-btn").click();}); 
+
+//Click ellipsis.
+$(".msg-thread__topcard-overflow-icon").click();
+
+//Click ellipses for all messages that are visible.
+$(".msg-conversation-listitem__link").each(function(){$(".msg-thread__topcard-overflow-icon").click();});
+
+//Click ellipses for all messages that are visible and hit "Delete", followed by "Yes, delete".
+$(".msg-conversation-listitem__link:first").each(
+	function() {
+		$(".msg-thread__topcard-overflow-icon").click();
+		$(".msg-topcard__full-width-action-button.delete").click();
+		$(".msg-modal__button.confirm-delete-btn").click();
+	}
+);
