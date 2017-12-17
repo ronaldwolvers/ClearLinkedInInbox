@@ -66,7 +66,4 @@ function executeAfterTimeout(functionToExecute, timeout) {
 	});
 }
 
-executeAfterTimeout(clickFirstMessage, 5000).
-	then(executeAfterTimeout(clickOverFlowButton, 5000)).
-	then(executeAfterTimeout(clickDeleteConversationButton, 5000)).
-	then(executeAfterTimeout(clickDeleteConfirmButton, 5000));
+executeAfterTimeout(clickFirstMessage, 5000).then(executeAfterTimeout.bind(this, clickOverFlowButton, 5000)).then(executeAfterTimeout.bind(this, clickDeleteConversationButton, 5000)).then(executeAfterTimeout.bind(this, clickDeleteConfirmButton, 5000));
