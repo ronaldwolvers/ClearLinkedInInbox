@@ -1,46 +1,8 @@
+//Execute the Javascript snippet below directly on your LinkedIn messages page to clear your
+//inbox, slowly but steadily.
+//Authored 17 december 2017, http://www.linkedin.com/messaging/
 
-
-//
-
-//Old.
-$(".msg-conversation-card__delete").each(function(){$(this).click();$("button.confirm-delete-btn").click();}); 
-
-//Click ellipsis.
-$(".msg-thread__topcard-overflow-icon").click();
-
-//Click ellipses for all messages that are visible.
-$(".msg-conversation-listitem__link").each(function(){$(".msg-thread__topcard-overflow-icon").click();});
-
-//Click ellipses for all messages that are visible and hit "Delete", followed by "Yes, delete".
-$(".msg-conversation-listitem__link:first").each(
-	function() {
-		setTimeout(function printSomeStuff() {
-			console.log('Some stuff in the console');
-		});
-		$(".msg-thread__topcard-overflow-icon").click();
-		$(".msg-topcard__full-width-action-button.delete").click();
-		$(".msg-modal__button.confirm-delete-btn").click();
-	}
-);
-
-//Click ellipses for all messages that are visible and hit "Delete", followed by "Yes, delete". Looping.
-var count = 4;
-function deleteFirstVisibleMessage() {
-	$(".msg-conversation-listitem__link:first").each(
-		function() {
-			if (count > 0) {
-				setTimeout(deleteFirstVisibleMessage);
-			}
-			$(".msg-thread__topcard-overflow-icon").click();
-			$(".msg-topcard__full-width-action-button.delete").click();
-			$(".msg-modal__button.confirm-delete-btn").click();
-			count--;
-		}
-	);
-}
-deleteFirstVisibleMessage();
-
-//Same as above but with chained promises.
+//https://github.com/ronaldw/ClearLinkedInInbox
 
 //Click the first visible message.
 function clickFirstMessage() {
@@ -73,7 +35,12 @@ function executeAfterTimeout(functionToExecute, timeout) {
 	});
 }
 
+
+//Timeout (in milliseconds) in between every step. Due to asynchronous calls being made on the page
+//a timeout is necessary, but the value of the timeout was arbitrarily chosen.
+const timeout = 1000;
+
 //Keep looping while there are still messages.
 while	($(".msg-conversation-listitem__link:eq(0)").length > 0) {
-	await executeAfterTimeout(clickFirstMessage, 5000).then(executeAfterTimeout.bind(this, clickOverFlowButton, 5000)).then(executeAfterTimeout.bind(this, clickDeleteConversationButton, 5000)).then(executeAfterTimeout.bind(this, clickDeleteConfirmButton, 5000));
+	await executeAfterTimeout(clickFirstMessage, timeout).then(executeAfterTimeout.bind(this, clickOverFlowButton, timeout)).then(executeAfterTimeout.bind(this, clickDeleteConversationButton, timeout)).then(executeAfterTimeout.bind(this, clickDeleteConfirmButton, timeout));
 }
